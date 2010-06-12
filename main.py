@@ -1,11 +1,13 @@
 import cgi
-
+import os
 import pages
 
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import db
+
+from google.appengine.ext.webapp import template
 
 class Call(db.Model):
 	caller = db.StringProperty()
@@ -27,10 +29,12 @@ class Police_officer(db.Model):
 
 
 class MainPage(webapp.RequestHandler):
-	def get(self):
-		self.response.out.write( pages.index % {'msg':''} )
-	
-	def post(self):
+    def get(self):
+        template_values = {}
+        path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
+        self.response.out.write(template.render(path, template_values))
+    
+    def post(self):
 		#Simply post data into datastore.
 		#and confirm post
 		
@@ -47,8 +51,7 @@ class MainPage(webapp.RequestHandler):
 			self.response.out.write( pages.index % {'msg':'Complaint from <b>%s</b> logged' % call.caller} )
 		except:
 			self.response.out.write( pages.index % {'msg':'System error.'} )
-
-
+    
 
 application = webapp.WSGIApplication(
                                      [

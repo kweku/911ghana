@@ -1,0 +1,18 @@
+#container {
+	width: 800px;
+	margin: 0 auto;	
+}
+.hdr {
+	text-align: center;
+	font-size: 3em;	
+	padding: 10px
+}
+
+.form {
+	float: left;
+	margin-right: 20px;
+}
+
+.map {
+	float: left
+}
